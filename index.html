@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCTOCHRON — Abyssal Horological Sculpture</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Editorial & Precision Telemetry Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Horological Finish Variables */
+        :root {
+            --bg-abyss-top: #0c1626;
+            --bg-abyss-bottom: #04080f;
+            --accent-primary: #d4af37;
+            --accent-secondary: #94a3b8;
+            --lume-color: #38bdf8;
+            --lume-glow: rgba(56, 189, 248, 0.25);
+            --metal-stop-1: #334155;
+            --metal-stop-2: #1e293b;
+            --metal-stop-3: #090d16;
+            --rim-highlight: rgba(212, 175, 55, 0.55);
+            --dial-bg-1: #0f172a;
+            --dial-bg-2: #060b14;
+            --bezel-ring: #1e293b;
+            --bezel-accent: #d4af37;
+            --hand-fill: #f8fafc;
+            --hand-second: #d4af37;
+            --particle-color: rgba(212, 175, 55, 0.35);
+        }
+
+        [data-finish="lume"] {
+            --bg-abyss-top: #06121e;
+            --bg-abyss-bottom: #02050a;
+            --accent-primary: #22d3ee;
+            --accent-secondary: #64748b;
+            --lume-color: #2dd4bf;
+            --lume-glow: rgba(45, 212, 191, 0.65);
+            --metal-stop-1: #1e293b;
+            --metal-stop-2: #0f172a;
+            --metal-stop-3: #030712;
+            --rim-highlight: rgba(34, 211, 238, 0.65);
+            --dial-bg-1: #040d14;
+            --dial-bg-2: #010408;
+            --bezel-ring: #091522;
+            --bezel-accent: #2dd4bf;
+            --hand-fill: #2dd4bf;
+            --hand-second: #38bdf8;
+            --particle-color: rgba(45, 212, 191, 0.45);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(circle at 50% 15%, var(--bg-abyss-top) 0%, var(--bg-abyss-bottom) 85%);
+            transition: background 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+            overflow-x: hidden;
+        }
+
+        .font-display {
+            font-family: 'Cinzel', serif;
+        }
+
+        .font-mono-tech {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Subtle Deep-Sea Caustic Light Shafts */
+        .abyssal-caustics {
+            background: repeating-linear-gradient(
+                112deg,
+                rgba(255, 255, 255, 0.018) 0px,
+                rgba(255, 255, 255, 0.018) 2px,
+                transparent 2px,
+                transparent 65px
+            );
+            mask-image: radial-gradient(ellipse at 50% 0%, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 75%);
+            -webkit-mask-image: radial-gradient(ellipse at 50% 0%, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 75%);
+            animation: causticDrift 22s ease-in-out infinite alternate;
+        }
+
+        @keyframes causticDrift {
+            0% { transform: skewX(-3deg) translateX(-12px); }
+            100% { transform: skewX(3deg) translateX(12px); }
+        }
+
+        /* Poised Horological Suspension */
+        .sculpture-levitate {
+            animation: poiseFloat 7s ease-in-out infinite;
+            filter: drop-shadow(0 28px 45px rgba(0, 0, 0, 0.75));
+        }
+
+        @keyframes poiseFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+
+        /* Graceful, Subtle Tentacle Articulation */
+        .tentacle-articulate-a {
+            transform-origin: 300px 300px;
+            animation: articulateA 8s ease-in-out infinite;
+        }
+        .tentacle-articulate-b {
+            transform-origin: 300px 300px;
+            animation: articulateB 9s ease-in-out infinite;
+        }
+        .tentacle-articulate-c {
+            transform-origin: 300px 300px;
+            animation: articulateA 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes articulateA {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(1.6deg); }
+        }
+
+        @keyframes articulateB {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-1.6deg); }
+        }
+
+        /* Deep-Sea Marine Snow / Micro-Particles */
+        .marine-particle {
+            position: absolute;
+            border-radius: 9999px;
+            background-color: var(--particle-color);
+            pointer-events: none;
+            animation: driftParticle linear infinite;
+            transition: background-color 0.9s ease;
+        }
+
+        @keyframes driftParticle {
+            0% {
+                transform: translateY(15vh) translateX(0);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.7;
+            }
+            80% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-105vh) translateX(18px);
+                opacity: 0;
+            }
+        }
+
+        /* Lume Glow Filter in Night Vision Mode */
+        [data-finish="lume"] .lume-element {
+            filter: drop-shadow(0 0 5px var(--lume-glow));
+        }
+
+        /* Smooth theme transitions on SVG elements */
+        .dynamic-stroke-accent {
+            stroke: var(--bezel-accent);
+            transition: stroke 0.8s ease;
+        }
+        .dynamic-fill-accent {
+            fill: var(--bezel-accent);
+            transition: fill 0.8s ease;
+        }
+        .dynamic-hand-fill {
+            fill: var(--hand-fill);
+            transition: fill 0.8s ease;
+        }
+        .dynamic-second-stroke {
+            stroke: var(--hand-second);
+            transition: stroke 0.8s ease;
+        }
+        .dynamic-second-fill {
+            fill: var(--hand-second);
+            transition: fill 0.8s ease;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between items-center text-slate-100 relative select-none p-4 sm:p-6 lg:p-8">
+
+    <!-- Ambient Abyssal Layer -->
+    <div class="fixed inset-0 abyssal-caustics pointer-events-none z-0"></div>
+    <div id="particle-field" class="fixed inset-0 overflow-hidden pointer-events-none z-0"></div>
+
+    <!-- Top Horological Header & Controls -->
+    <header class="w-full max-w-5xl flex flex-col md:flex-row items-center justify-between gap-4 z-10 bg-slate-900/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl px-6 py-3.5 shadow-2xl">
+        <!-- Brand Identity -->
+        <div class="flex items-center gap-3.5">
+            <div class="w-9 h-9 rounded-full border border-amber-400/40 bg-slate-950/80 flex items-center justify-center shadow-inner">
+                <svg class="w-5 h-5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M12 7v5l3 2" stroke-linecap="round" />
+                    <path d="M4.5 16.5c2-1 4-1 5.5 0M14 16.5c1.5-1 3.5-1 5.5 0" stroke-linecap="round" />
+                </svg>
+            </div>
+            <div>
+                <div class="flex items-center gap-2">
+                    <h1 class="font-display text-lg sm:text-xl font-bold tracking-[0.2em] text-slate-100">OCTOCHRON</h1>
+                    <span class="text-[10px] font-mono-tech uppercase tracking-widest px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-400/25">Cal. VIII</span>
+                </div>
+                <p class="text-[11px] uppercase tracking-[0.18em] text-slate-400">Abyssal Mechanical Chronometer</p>
+            </div>
+        </div>
+
+        <!-- Precision Control Suite -->
+        <div class="flex flex-wrap items-center justify-center gap-2.5">
+            <!-- Finish Toggle: Abyssal Gold vs Super-LumiNova -->
+            <div class="flex items-center bg-slate-950/80 p-1 rounded-xl border border-slate-800" role="group" aria-label="Horological Finish">
+                <button onclick="setFinish('gold')" id="btn-finish-gold" class="px-3 py-1.5 rounded-lg text-[11px] font-medium uppercase tracking-wider transition-all bg-amber-500/20 text-amber-300 border border-amber-400/30 shadow-sm">
+                    Abyssal Gold
+                </button>
+                <button onclick="setFinish('lume')" id="btn-finish-lume" class="px-3 py-1.5 rounded-lg text-[11px] font-medium uppercase tracking-wider transition-all text-slate-400 hover:text-slate-200 border border-transparent">
+                    Night Lume
+                </button>
+            </div>
+
+            <!-- Escapement Movement Toggle: Mechanical Sweep vs Quartz Tick -->
+            <button id="btn-movement" onclick="toggleMovement()" class="px-3.5 py-2 rounded-xl bg-slate-950/70 hover:bg-slate-800/80 border border-slate-700/70 text-slate-300 text-[11px] font-mono-tech uppercase tracking-wider transition-all active:scale-95">
+                28,800 VPH SWEEP
+            </button>
+
+            <!-- 12H / 24H Format Toggle -->
+            <button id="btn-format" onclick="toggleTimeFormat()" class="px-3.5 py-2 rounded-xl bg-slate-950/70 hover:bg-slate-800/80 border border-slate-700/70 text-slate-300 text-[11px] font-mono-tech uppercase tracking-wider transition-all active:scale-95">
+                24H UTC
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Centerpiece: Sculpted Metallic Octopus & Mechanical Chronometer -->
+    <main class="flex-1 flex flex-col items-center justify-center w-full max-w-4xl z-10 my-2">
+        <div class="relative w-full max-w-[440px] sm:max-w-[530px] aspect-square flex items-center justify-center">
+            
+            <!-- Precision Horological SVG Sculpture -->
+            <svg id="octopus-sculpture" viewBox="0 0 600 600" class="w-full h-full sculpture-levitate overflow-visible" aria-label="Sculpted Octopus Mechanical Chronometer">
+                <defs>
+                    <!-- Brushed Obsidian-Titanium Mantle Gradient -->
+                    <radialGradient id="mantleGrad" cx="42%" cy="28%" r="72%">
+                        <stop offset="0%" style="stop-color: var(--metal-stop-1); transition: stop-color 0.8s ease;" />
+                        <stop offset="55%" style="stop-color: var(--metal-stop-2); transition: stop-color 0.8s ease;" />
+                        <stop offset="100%" style="stop-color: var(--metal-stop-3); transition: stop-color 0.8s ease;" />
+                    </radialGradient>
+
+                    <!-- Sculpted Tentacle Metallic Gradient -->
+                    <linearGradient id="tentaclePrimaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color: var(--metal-stop-1); transition: stop-color 0.8s ease;" />
+                        <stop offset="50%" style="stop-color: var(--metal-stop-2); transition: stop-color 0.8s ease;" />
+                        <stop offset="100%" style="stop-color: var(--metal-stop-3); transition: stop-color 0.8s ease;" />
+                    </linearGradient>
+
+                    <!-- Deep Shadow Rear Tentacles Gradient -->
+                    <linearGradient id="tentacleRearGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color: var(--metal-stop-2); transition: stop-color 0.8s ease;" />
+                        <stop offset="100%" style="stop-color: var(--metal-stop-3); transition: stop-color 0.8s ease;" />
+                    </linearGradient>
+
+                    <!-- Specular Rim Edge Highlight -->
+                    <linearGradient id="rimHighlightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color: var(--rim-highlight); transition: stop-color 0.8s ease;" />
+                        <stop offset="50%" stop-color="rgba(255,255,255,0.08)" />
+                        <stop offset="100%" style="stop-color: var(--rim-highlight); transition: stop-color 0.8s ease;" />
+                    </linearGradient>
+
+                    <!-- Sunray Abyssal Dial Gradient -->
+                    <radialGradient id="dialSunrayGrad" cx="50%" cy="40%" r="60%">
+                        <stop offset="0%" style="stop-color: var(--dial-bg-1); transition: stop-color 0.8s ease;" />
+                        <stop offset="100%" style="stop-color: var(--dial-bg-2); transition: stop-color 0.8s ease;" />
+                    </radialGradient>
+
+                    <!-- Bezel Brushed Metallic Ring -->
+                    <linearGradient id="bezelMetalGrad" x1="15%" y1="15%" x2="85%" y2="85%">
+                        <stop offset="0%" stop-color="#475569" />
+                        <stop offset="30%" stop-color="#1e293b" />
+                        <stop offset="70%" stop-color="#0f172a" />
+                        <stop offset="100%" stop-color="#334155" />
+                    </linearGradient>
+
+                    <!-- Recessed Dial Inner Shadow -->
+                    <filter id="bezelDepth" x="-15%" y="-15%" width="130%" height="130%">
+                        <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000000" flood-opacity="0.75" />
+                    </filter>
+
+                    <!-- Subtle Crystal Reflection -->
+                    <linearGradient id="sapphireGlare" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="rgba(255,255,255,0.14)" />
+                        <stop offset="45%" stop-color="rgba(255,255,255,0.02)" />
+                        <stop offset="100%" stop-color="rgba(255,255,255,0)" />
+                    </linearGradient>
+                </defs>
+
+                <!-- LAYER 1: REAR STRUCTURAL TENTACLES (4 Symmetrical Arms) -->
+                <g id="rear-tentacles" opacity="0.92">
+                    <!-- Upper Left Sweeping Arm -->
+                    <g class="tentacle-articulate-a">
+                        <path d="M 215 245 C 145 195, 78 215, 65 152 C 56 108, 98 85, 118 118 C 130 138, 104 155, 96 138 C 90 172, 152 162, 232 222 Z" 
+                              fill="url(#tentacleRearGrad)" stroke="url(#rimHighlightGrad)" stroke-width="1.2" />
+                    </g>
+
+                    <!-- Upper Right Sweeping Arm -->
+                    <g class="tentacle-articulate-b">
+                        <path d="M 385 245 C 455 195, 522 215, 535 152 C 544 108, 502 85, 482 118 C 470 138, 496 155, 504 138 C 510 172, 448 162, 368 222 Z" 
+                              fill="url(#tentacleRearGrad)" stroke="url(#rimHighlightGrad)" stroke-width="1.2" />
+                    </g>
+
+                    <!-- Mid-Lateral Left Arm -->
+                    <g class="tentacle-articulate-c">
+                        <path d="M 192 315 C 110 315, 52 368, 42 310 C 34 265, 78 250, 92 282 C 98 298, 76 308, 72 294 C 74 328, 128 286, 200 292 Z" 
+                              fill="url(#tentacleRearGrad)" stroke="url(#rimHighlightGrad)" stroke-width="1.2" />
+                    </g>
+
+                    <!-- Mid-Lateral Right Arm -->
+                    <g class="tentacle-articulate-c">
+                        <path d="M 408 315 C 490 315, 548 368, 558 310 C 566 265, 522 250, 508 282 C 502 298, 524 308, 528 294 C 526 328, 472 286, 400 292 Z" 
+                              fill="url(#tentacleRearGrad)" stroke="url(#rimHighlightGrad)" stroke-width="1.2" />
+                    </g>
+                </g>
+
+                <!-- LAYER 2: SCULPTED OCTOPUS MANTLE / CROWN ARCH -->
+                <g id="octopus-mantle">
+                    <!-- Main Architectural Mantle Dome -->
+                    <path d="M 182 260 C 170 135, 222 52, 300 52 C 378 52, 430 135, 418 260 C 410 335, 365 395, 300 395 C 235 395, 190 335, 182 260 Z" 
+                          fill="url(#mantleGrad)" stroke="url(#rimHighlightGrad)" stroke-width="1.8" />
+                    
+                    <!-- Fine Hydrodynamic Ridge Lines (Abstract, Non-Cartoonish Detailing) -->
+                    <path d="M 245 78 C 232 115, 228 155, 232 185" fill="none" stroke="url(#rimHighlightGrad)" stroke-width="1.2" stroke-linecap="round" opacity="0.7" />
+                    <path d="M 355 78 C 368 115, 372 155, 368 185" fill="none" stroke="url(#rimHighlightGrad)" stroke-width="1.2" stroke-linecap="round" opacity="0.7" />
+                    <path d="M 300 64 L 300 168" fill="none" stroke="url(#rimHighlightGrad)" stroke-width="1" stroke-dasharray="3 5" opacity="0.55" />
+
+                    <!-- Subtle Sculpted Ocular Ridges (Sleek Horological Brow Flutes) -->
+                    <path d="M 205 182 Q 235 164 265 178" fill="none" stroke="url(#rimHighlightGrad)" stroke-width="2" stroke-linecap="round" />
+                    <path d="M 395 182 Q 365 164 335 178" fill="none" stroke="url(#rimHighlightGrad)" stroke-width="2" stroke-linecap="round" />
+                </g>
+
+                <!-- LAYER 3: FOREGROUND CRADLING TENTACLES (4 Sculpted Arms with Precision Suction Rings) -->
+                <g id="foreground-tentacles">
+                    <!-- Outer Left Cradling Tentacle -->
+                    <g class="tentacle-articulate-b">
+                        <path d="M 202 355 C 138 398, 72 458, 96 508 C 115 544, 165 522, 148 490 C 138 470, 115 484, 124 498 C 106 472, 168 418, 224 374 Z" 
+                              fill="url(#tentaclePrimaryGrad)" stroke="url(#rimHighlightGrad)" stroke-width="1.5" />
+                        <!-- Geometric Suction Cup Rings -->
+                        <circle cx="164" cy="412" r="5.5" fill="none" class="dynamic-stroke-accent" stroke-width="1.3" opacity="0.75" />
+                        <circle cx="138" cy="442" r="4.8" fill="none" class="dynamic-stroke-accent" stroke-width="1.3" opacity="0.7" />
+                        <circle cx="118" cy="474" r="4" fill="none" class="dynamic-stroke-accent" stroke-width="1.2" opacity="0.65" />
+                    </g>
+
+                    <!-- Inner Left Coiling Tentacle -->
+                    <g class="tentacle-articulate-a">
+                        <path d="M 248 380 C 225 452, 178 522, 214 558 C 242 584, 282 552, 260 526 C 245 510, 226 525, 238 538 C 214 520, 256 456, 276 386 Z" 
+                              fill="url(#tentaclePrimaryGrad)" stroke="url(#rimHighlightGrad)" stroke-width="1.5" />
+                        <circle cx="238" cy="442" r="5.5" fill="none" class="dynamic-stroke-accent" stroke-width="1.3" opacity="0.75" />
+                        <circle cx="222" cy="482" r="4.8" fill="none" class="dynamic-stroke-accent" stroke-width="1.3" opacity="0.7" />
+                        <circle cx="215" cy="520" r="4" fill="none" class="dynamic-stroke-accent" stroke-width="1.2" opacity="0.65" />
+                    </g>
+
+                    <!-- Inner Right Coiling Tentacle -->
+                    <g class="tentacle-articulate-b">
+                        <path d="M 352 380 C 375 452, 422 522, 386 558 C 358 584, 318 552, 340 526 C 355 510, 374 525, 362 538 C 386 520, 344 456, 324 386 Z" 
+                              fill="url(#tentaclePrimaryGrad)" stroke="url(#rimHighlightGrad)" stroke-width="1.5" />
+                        <circle cx="362" cy="442" r="5.5" fill="none" class="dynamic-stroke-accent" stroke-width="1.3" opacity="0.75" />
+                        <circle cx="378" cy="482" r="4.8" fill="none" class="dynamic-stroke-accent" stroke-width="1.3" opacity="0.7" />
+                        <circle cx="385" cy="520" r="4" fill="none" class="dynamic-stroke-accent" stroke-width="1.2" opacity="0.65" />
+                    </g>
+
+                    <!-- Outer Right Cradling Tentacle -->
+                    <g class="tentacle-articulate-a">
+                        <path d="M 398 355 C 462 398, 528 458, 504 508 C 485 544, 435 522, 452 490 C 462 470, 485 484, 476 498 C 494 472, 432 418, 376 374 Z" 
+                              fill="url(#tentaclePrimaryGrad)" stroke="url(#rimHighlightGrad)" stroke-width="1.5" />
+                        <circle cx="436" cy="412" r="5.5" fill="none" class="dynamic-stroke-accent" stroke-width="1.3" opacity="0.75" />
+                        <circle cx="462" cy="442" r="4.8" fill="none" class="dynamic-stroke-accent" stroke-width="1.3" opacity="0.7" />
+                        <circle cx="482" cy="474" r="4" fill="none" class="dynamic-stroke-accent" stroke-width="1.2" opacity="0.65" />
+                    </g>
+                </g>
+
+                <!-- LAYER 4: LUXURY MECHANICAL DIVER'S CHRONOMETER (Centered at 300, 295) -->
+                <g id="chronometer-assembly" transform="translate(300, 295)" filter="url(#bezelDepth)">
+                    
+                    <!-- Outer Knurled Bezel Case -->
+                    <circle cx="0" cy="0" r="116" fill="url(#bezelMetalGrad)" stroke="url(#rimHighlightGrad)" stroke-width="2" />
+                    
+                    <!-- Rotating/Graduated Diver's Bezel Insert -->
+                    <circle cx="0" cy="0" r="108" fill="#070d17" stroke="#334155" stroke-width="1.5" />
+                    <g id="bezel-markings"></g>
+
+                    <!-- Inner Metallic Rehaut / Chapter Ring -->
+                    <circle cx="0" cy="0" r="92" fill="url(#dialSunrayGrad)" class="dynamic-stroke-accent" stroke-width="1.8" />
+                    <circle cx="0" cy="0" r="88" fill="none" stroke="rgba(148, 163, 184, 0.2)" stroke-width="0.8" />
+
+                    <!-- Fine Guilloché Concentric Dial Rings -->
+                    <circle cx="0" cy="0" r="66" fill="none" stroke="rgba(148, 163, 184, 0.12)" stroke-width="0.7" stroke-dasharray="2 2" />
+                    <circle cx="0" cy="0" r="44" fill="none" stroke="rgba(148, 163, 184, 0.1)" stroke-width="0.7" />
+
+                    <!-- Precision Minute Track & Applied Baton Hour Indices -->
+                    <g id="dial-indices" class="lume-element"></g>
+
+                    <!-- Dial Brand Engraving & Depth Rating -->
+                    <text x="0" y="-36" text-anchor="middle" fill="#cbd5e1" font-family="'Cinzel', serif" font-size="8.5" font-weight="700" letter-spacing="2.8">OCTOCHRON</text>
+                    <text x="0" y="-26" text-anchor="middle" class="dynamic-fill-accent" font-family="'JetBrains Mono', monospace" font-size="5.5" letter-spacing="1.6">AUTOMATIC • 300M / 1000FT</text>
+
+                    <!-- English Day-Date Aperture at 6 O'Clock -->
+                    <g transform="translate(0, 46)">
+                        <rect x="-25" y="-9" width="50" height="18" rx="3" fill="#04080f" class="dynamic-stroke-accent" stroke-width="1.1" />
+                        <text id="dial-date-window" x="0" y="3.5" text-anchor="middle" fill="#f8fafc" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="600" letter-spacing="1">TUE 10</text>
+                    </g>
+
+                    <!-- DAUPHINE / SKELETON HOUR HAND -->
+                    <g id="hour-hand" class="lume-element">
+                        <polygon points="0,-52 6,-12 0,12 -6,-12" class="dynamic-hand-fill" stroke="#090d16" stroke-width="0.8" />
+                        <!-- Luminous Center Spine -->
+                        <line x1="0" y1="-44" x2="0" y2="-14" stroke="#090d16" stroke-width="1.6" stroke-linecap="round" />
+                    </g>
+
+                    <!-- DAUPHINE / SKELETON MINUTE HAND -->
+                    <g id="minute-hand" class="lume-element">
+                        <polygon points="0,-78 4.5,-14 0,15 -4.5,-14" class="dynamic-hand-fill" stroke="#090d16" stroke-width="0.8" />
+                        <!-- Luminous Center Spine -->
+                        <line x1="0" y1="-68" x2="0" y2="-16" stroke="#090d16" stroke-width="1.4" stroke-linecap="round" />
+                    </g>
+
+                    <!-- COUNTERWEIGHTED SWEEPING SECOND HAND -->
+                    <g id="second-hand" class="lume-element">
+                        <line x1="0" y1="22" x2="0" y2="-84" class="dynamic-second-stroke" stroke-width="1.5" stroke-linecap="round" />
+                        <!-- Lume Lollipop Tip -->
+                        <circle cx="0" cy="-66" r="3" fill="#070d17" class="dynamic-second-stroke" stroke-width="1.6" />
+                        <!-- Trident/Anchor Counterweight -->
+                        <circle cx="0" cy="16" r="3.5" class="dynamic-second-fill" />
+                    </g>
+
+                    <!-- Center Pinion Cap -->
+                    <circle cx="0" cy="0" r="6" fill="#1e293b" class="dynamic-stroke-accent" stroke-width="1.8" />
+                    <circle cx="0" cy="0" r="2" class="dynamic-fill-accent" />
+
+                    <!-- Domed Sapphire Crystal Subtle Glare -->
+                    <path d="M -82 -42 A 92 92 0 0 1 78 -48 A 110 85 0 0 0 -82 -42 Z" fill="url(#sapphireGlare)" pointer-events="none" />
+                </g>
+            </svg>
+        </div>
+
+        <!-- Precision Telemetry & Chronometer HUD Readout -->
+        <div class="mt-2 sm:mt-3 bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 rounded-2xl px-7 py-4 shadow-2xl flex flex-col sm:flex-row items-center gap-4 sm:gap-8">
+            <!-- Digital Chronometer -->
+            <div class="text-center sm:text-left">
+                <div class="text-[10px] font-mono-tech uppercase tracking-[0.22em] text-slate-400 mb-0.5">Master Chronometer</div>
+                <div class="flex items-baseline justify-center sm:justify-start gap-2">
+                    <span id="hud-time" class="font-mono-tech text-3xl sm:text-4xl font-semibold tracking-wider text-slate-50">
+                        19:06:00
+                    </span>
+                    <span id="hud-ampm" class="font-mono-tech text-xs font-semibold text-amber-400 tracking-widest hidden">
+                        PM
+                    </span>
+                </div>
+            </div>
+
+            <!-- Vertical Divider -->
+            <div class="hidden sm:block w-px h-10 bg-slate-700/70"></div>
+
+            <!-- English Date & Local Meridian Telemetry -->
+            <div class="text-center sm:text-left">
+                <div id="hud-date" class="text-xs sm:text-sm font-medium tracking-[0.12em] uppercase text-slate-200">
+                    TUESDAY, NOVEMBER 10, 2026
+                </div>
+                <div id="hud-timezone" class="font-mono-tech text-[11px] text-slate-400 tracking-wider mt-1">
+                    LOCAL MERIDIAN • UTC+01:00
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Minimalist Horological Footer -->
+    <footer class="z-10 text-center text-[11px] font-mono-tech uppercase tracking-[0.2em] text-slate-500 pb-1">
+        Swiss-Inspired Calibre VIII • Abyssal Marine Sculpture
+    </footer>
+
+    <script>
+        // Application Telemetry & Horological State
+        let is24Hour = true;
+        let isMechanicalSweep = true;
+        let currentFinish = 'gold';
+
+        // Cached DOM References
+        const hourHand = document.getElementById('hour-hand');
+        const minuteHand = document.getElementById('minute-hand');
+        const secondHand = document.getElementById('second-hand');
+        const dialDateWindow = document.getElementById('dial-date-window');
+        const hudTimeEl = document.getElementById('hud-time');
+        const hudAmPmEl = document.getElementById('hud-ampm');
+        const hudDateEl = document.getElementById('hud-date');
+        const hudTimezoneEl = document.getElementById('hud-timezone');
+        const btnMovement = document.getElementById('btn-movement');
+        const btnFormat = document.getElementById('btn-format');
+
+        /**
+         * Build Rotating Diver's Bezel Graduations & Applied Baton Indices
+         */
+        function buildChronometerDial() {
+            const bezelGroup = document.getElementById('bezel-markings');
+            const indicesGroup = document.getElementById('dial-indices');
+
+            // 1. Diver's Bezel Markings (0 to 60)
+            if (bezelGroup) {
+                for (let i = 0; i < 60; i++) {
+                    const angle = i * 6;
+                    if (i === 0) {
+                        // Luminous Inverted Triangle at 12 o'clock on Bezel
+                        const tri = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+                        tri.setAttribute('points', '0,-96 -5,-105 5,-105');
+                        tri.setAttribute('class', 'dynamic-fill-accent');
+                        bezelGroup.appendChild(tri);
+                    } else if (i % 10 === 0) {
+                        // Crisp Numerals at 10, 20, 30, 40, 50
+                        const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                        const rad = (angle - 90) * (Math.PI / 180);
+                        const r = 100.5;
+                        txt.setAttribute('x', (Math.cos(rad) * r).toFixed(2));
+                        txt.setAttribute('y', (Math.sin(rad) * r + 2.8).toFixed(2));
+                        txt.setAttribute('text-anchor', 'middle');
+                        txt.setAttribute('fill', '#cbd5e1');
+                        txt.setAttribute('font-family', "'JetBrains Mono', monospace");
+                        txt.setAttribute('font-size', '7.5');
+                        txt.setAttribute('font-weight', '600');
+                        txt.setAttribute('transform', `rotate(${angle}, ${(Math.cos(rad) * r).toFixed(2)}, ${(Math.sin(rad) * r).toFixed(2)})`);
+                        txt.textContent = String(i);
+                        bezelGroup.appendChild(txt);
+                    } else if (i % 5 === 0) {
+                        // Baton Marker on Bezel
+                        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                        line.setAttribute('x1', '0');
+                        line.setAttribute('y1', '-97');
+                        line.setAttribute('x2', '0');
+                        line.setAttribute('y2', '-104');
+                        line.setAttribute('stroke', '#94a3b8');
+                        line.setAttribute('stroke-width', '1.6');
+                        line.setAttribute('transform', `rotate(${angle})`);
+                        bezelGroup.appendChild(line);
+                    } else if (i < 15) {
+                        // Fine 1-minute decompression ticks for first 15 minutes
+                        const tick = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                        tick.setAttribute('x1', '0');
+                        tick.setAttribute('y1', '-98');
+                        tick.setAttribute('x2', '0');
+                        tick.setAttribute('y2', '-103');
+                        tick.setAttribute('stroke', '#64748b');
+                        tick.setAttribute('stroke-width', '0.9');
+                        tick.setAttribute('transform', `rotate(${angle})`);
+                        bezelGroup.appendChild(tick);
+                    }
+                }
+            }
+
+            // 2. Inner Dial Minute Track & Applied Luminous Baton Indices
+            if (indicesGroup) {
+                for (let i = 0; i < 60; i++) {
+                    const angle = i * 6;
+                    const isHour = i % 5 === 0;
+
+                    if (isHour) {
+                        const hourNum = i / 5;
+                        // Skip 6 o'clock baton to leave room for the Day-Date aperture
+                        if (hourNum === 6) continue;
+
+                        if (hourNum === 0) {
+                            // Double Baton Index at 12 O'Clock
+                            [-2.4, 2.4].forEach(offsetX => {
+                                const baton = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                                baton.setAttribute('x', String(offsetX - 1.5));
+                                baton.setAttribute('y', '-84');
+                                baton.setAttribute('width', '3');
+                                baton.setAttribute('height', '13');
+                                baton.setAttribute('rx', '1');
+                                baton.setAttribute('class', 'dynamic-hand-fill dynamic-stroke-accent');
+                                baton.setAttribute('stroke-width', '0.7');
+                                indicesGroup.appendChild(baton);
+                            });
+                        } else {
+                            // Single Applied Baton Index
+                            const baton = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                            baton.setAttribute('x', '-2');
+                            baton.setAttribute('y', '-84');
+                            baton.setAttribute('width', '4');
+                            baton.setAttribute('height', '11');
+                            baton.setAttribute('rx', '1');
+                            baton.setAttribute('class', 'dynamic-hand-fill dynamic-stroke-accent');
+                            baton.setAttribute('stroke-width', '0.7');
+                            baton.setAttribute('transform', `rotate(${angle})`);
+                            indicesGroup.appendChild(baton);
+                        }
+                    } else {
+                        // Fine Minute Hash Mark
+                        const tick = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                        tick.setAttribute('x1', '0');
+                        tick.setAttribute('y1', '-85');
+                        tick.setAttribute('x2', '0');
+                        tick.setAttribute('y2', '-81.5');
+                        tick.setAttribute('stroke', '#64748b');
+                        tick.setAttribute('stroke-width', '0.9');
+                        tick.setAttribute('transform', `rotate(${angle})`);
+                        indicesGroup.appendChild(tick);
+                    }
+                }
+            }
+        }
+
+        /**
+         * Detect Local Timezone Offset for Precision Telemetry Display
+         */
+        function updateTimezoneLabel() {
+            const offsetMinutes = -new Date().getTimezoneOffset();
+            const sign = offsetMinutes >= 0 ? '+' : '-';
+            const absMins = Math.abs(offsetMinutes);
+            const hrs = String(Math.floor(absMins / 60)).padStart(2, '0');
+            const mins = String(absMins % 60).padStart(2, '0');
+            if (hudTimezoneEl) {
+                hudTimezoneEl.textContent = `LOCAL MERIDIAN • UTC${sign}${hrs}:${mins}`;
+            }
+        }
+
+        /**
+         * 60FPS Horological Animation Loop
+         */
+        function renderChronometer() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            const milliseconds = now.getMilliseconds();
+
+            // 28,800 vph (8 beats per second) mechanical sweep vs 1Hz quartz step
+            let effectiveSeconds = seconds;
+            if (isMechanicalSweep) {
+                const beat = Math.floor(milliseconds / 125) * 0.125;
+                effectiveSeconds = seconds + beat;
+            }
+
+            const secondDeg = effectiveSeconds * 6;
+            const minuteDeg = (minutes + seconds / 60) * 6;
+            const hourDeg = ((hours % 12) + minutes / 60) * 30;
+
+            hourHand.setAttribute('transform', `rotate(${hourDeg.toFixed(2)})`);
+            minuteHand.setAttribute('transform', `rotate(${minuteDeg.toFixed(2)})`);
+            secondHand.setAttribute('transform', `rotate(${secondDeg.toFixed(2)})`);
+
+            // Digital Telemetry Readout
+            let displayHours = hours;
+            if (!is24Hour) {
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                displayHours = hours % 12 || 12;
+                hudAmPmEl.classList.remove('hidden');
+                hudAmPmEl.textContent = ampm;
+            } else {
+                hudAmPmEl.classList.add('hidden');
+            }
+
+            const hStr = String(displayHours).padStart(2, '0');
+            const mStr = String(minutes).padStart(2, '0');
+            const sStr = String(seconds).padStart(2, '0');
+            hudTimeEl.textContent = `${hStr}:${mStr}:${sStr}`;
+
+            // English Date Telemetry & Dial Aperture
+            const weekdayShort = now.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
+            const dayNum = String(now.getDate()).padStart(2, '0');
+            dialDateWindow.textContent = `${weekdayShort} ${dayNum}`;
+
+            const fullDateStr = now.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            }).toUpperCase();
+            hudDateEl.textContent = fullDateStr;
+
+            requestAnimationFrame(renderChronometer);
+        }
+
+        /**
+         * Switch Horological Finish: Abyssal Gold vs Night Vision Super-LumiNova
+         */
+        function setFinish(finish) {
+            currentFinish = finish;
+            const btnGold = document.getElementById('btn-finish-gold');
+            const btnLume = document.getElementById('btn-finish-lume');
+
+            if (finish === 'lume') {
+                document.documentElement.setAttribute('data-finish', 'lume');
+                btnLume.className = 'px-3 py-1.5 rounded-lg text-[11px] font-medium uppercase tracking-wider transition-all bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 shadow-sm';
+                btnGold.className = 'px-3 py-1.5 rounded-lg text-[11px] font-medium uppercase tracking-wider transition-all text-slate-400 hover:text-slate-200 border border-transparent';
+                hudAmPmEl.classList.replace('text-amber-400', 'text-cyan-400');
+            } else {
+                document.documentElement.removeAttribute('data-finish');
+                btnGold.className = 'px-3 py-1.5 rounded-lg text-[11px] font-medium uppercase tracking-wider transition-all bg-amber-500/20 text-amber-300 border border-amber-400/30 shadow-sm';
+                btnLume.className = 'px-3 py-1.5 rounded-lg text-[11px] font-medium uppercase tracking-wider transition-all text-slate-400 hover:text-slate-200 border border-transparent';
+                hudAmPmEl.classList.replace('text-cyan-400', 'text-amber-400');
+            }
+        }
+
+        /**
+         * Toggle Calibre Escapement: 28,800 VPH Mechanical Sweep vs 1Hz Quartz Step
+         */
+        function toggleMovement() {
+            isMechanicalSweep = !isMechanicalSweep;
+            btnMovement.textContent = isMechanicalSweep ? '28,800 VPH SWEEP' : '1HZ QUARTZ STEP';
+        }
+
+        /**
+         * Toggle 24H UTC vs 12H Civil Time Format
+         */
+        function toggleTimeFormat() {
+            is24Hour = !is24Hour;
+            btnFormat.textContent = is24Hour ? '24H UTC' : '12H CIVIL';
+        }
+
+        /**
+         * Spawn Subtle Deep-Sea Ambient Micro-Particles
+         */
+        function spawnAbyssalParticles() {
+            const container = document.getElementById('particle-field');
+            if (!container) return;
+
+            const count = 24;
+            for (let i = 0; i < count; i++) {
+                const speck = document.createElement('div');
+                speck.className = 'marine-particle';
+
+                const size = Math.random() * 2.5 + 1;
+                const left = Math.random() * 100;
+                const duration = Math.random() * 16 + 14;
+                const delay = Math.random() * 18;
+
+                speck.style.width = `${size}px`;
+                speck.style.height = `${size}px`;
+                speck.style.left = `${left}%`;
+                speck.style.animationDuration = `${duration}s`;
+                speck.style.animationDelay = `-${delay}s`;
+
+                container.appendChild(speck);
+            }
+        }
+
+        // Initialize Chronometer on Load
+        window.onload = function () {
+            buildChronometerDial();
+            updateTimezoneLabel();
+            spawnAbyssalParticles();
+            requestAnimationFrame(renderChronometer);
+        };
+    </script>
+</body>
+</html>
